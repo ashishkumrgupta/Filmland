@@ -2,11 +2,12 @@ package com.filmland.util;
 
 import com.filmland.dto.ResponseStatus;
 import com.filmland.dto.SubscribeCategory;
+import com.filmland.springbootstarter.services.SubscribeService;
 
 /**
  * @author Ashish
  * 
- *         Helper class for the Subscription Service to check and subscriptions
+ *         Helper class with methods for the {@link SubscribeService} to check and subscriptions
  *         if not already available for user.
  *
  */

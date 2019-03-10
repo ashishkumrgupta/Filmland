@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.filmland.dto.ResponseStatus;
+import com.filmland.dto.ShareCategory;
 import com.filmland.dto.SubscribeCategory;
 import com.filmland.springbootstarter.services.SubscribeService;
 
@@ -19,5 +20,10 @@ public class SubscriptionController {
 	@RequestMapping(method = RequestMethod.POST, value = "/subscribeCategory")
 	public ResponseStatus subscribeCategory(@RequestBody SubscribeCategory subscribeCategory) {
 		return subscribeService.addUserSubscriptionForCategory(subscribeCategory);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/shareCategory")
+	public void shareUserSubscriptionCategory(@RequestBody ShareCategory shareCategory) {
+		subscribeService.shareUserCategoryWithExistingUser(shareCategory);
 	}
 }
