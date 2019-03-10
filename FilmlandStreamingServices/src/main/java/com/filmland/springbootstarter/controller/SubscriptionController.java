@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.filmland.dto.ResponseStatus;
-import com.filmland.dto.ShareCategory;
-import com.filmland.dto.SubscribeCategory;
+import com.filmland.springbootstarter.dto.ResponseStatus;
+import com.filmland.springbootstarter.dto.ShareCategory;
+import com.filmland.springbootstarter.dto.SubscribeCategory;
 import com.filmland.springbootstarter.services.SubscribeService;
 
 @RestController

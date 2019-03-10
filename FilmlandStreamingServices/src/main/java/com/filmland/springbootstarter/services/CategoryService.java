@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.filmland.dto.AvailableAndSubscribedCategories;
-import com.filmland.dto.AvailableCategories;
-import com.filmland.dto.SubscribedCategories;
+import com.filmland.springbootstarter.dto.AvailableAndSubscribedCategories;
+import com.filmland.springbootstarter.dto.AvailableCategories;
+import com.filmland.springbootstarter.dto.SubscribedCategories;
 
 @Service
 public class CategoryService {

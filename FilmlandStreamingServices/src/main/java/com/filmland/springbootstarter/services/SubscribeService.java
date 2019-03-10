@@ -1,19 +1,22 @@
 package com.filmland.springbootstarter.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.filmland.dto.ResponseStatus;
-import com.filmland.dto.ShareCategory;
-import com.filmland.dto.SubscribeCategory;
-import com.filmland.util.ShareSubscriptionUtil;
-import com.filmland.util.SubscriptionUtil;
+import com.filmland.springbootstarter.dto.ResponseStatus;
+import com.filmland.springbootstarter.dto.ShareCategory;
+import com.filmland.springbootstarter.dto.SubscribeCategory;
+import com.filmland.springbootstarter.util.ShareSubscriptionUtil;
+import com.filmland.springbootstarter.util.SubscriptionUtil;
 
 @Service
 public class SubscribeService {
 
-	private SubscriptionUtil subscriptionUtil = new SubscriptionUtil();
+	@Autowired
+	private SubscriptionUtil subscriptionUtil;
 
-	private ShareSubscriptionUtil shareSubscriptionUtil = new ShareSubscriptionUtil();
+	@Autowired
+	private ShareSubscriptionUtil shareSubscriptionUtil;
 
 	public ResponseStatus addUserSubscriptionForCategory(SubscribeCategory subscribeCategory) {
 

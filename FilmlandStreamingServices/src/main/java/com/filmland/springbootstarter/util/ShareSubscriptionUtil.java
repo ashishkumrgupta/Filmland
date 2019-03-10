@@ -1,6 +1,8 @@
-package com.filmland.util;
+package com.filmland.springbootstarter.util;
 
-import com.filmland.dto.ShareCategory;
+import org.springframework.stereotype.Component;
+
+import com.filmland.springbootstarter.dto.ShareCategory;
 
 /**
  * @author Ashish
@@ -9,6 +11,7 @@ import com.filmland.dto.ShareCategory;
  *         existing users.
  *
  */
+@Component
 public class ShareSubscriptionUtil {
 
 	/**

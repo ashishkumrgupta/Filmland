@@ -1,16 +1,19 @@
-package com.filmland.util;
+package com.filmland.springbootstarter.util;
 
-import com.filmland.dto.ResponseStatus;
-import com.filmland.dto.SubscribeCategory;
+import org.springframework.stereotype.Component;
+
+import com.filmland.springbootstarter.dto.ResponseStatus;
+import com.filmland.springbootstarter.dto.SubscribeCategory;
 import com.filmland.springbootstarter.services.SubscribeService;
 
 /**
  * @author Ashish
  * 
- *         Helper class with methods for the {@link SubscribeService} to check and subscriptions
- *         if not already available for user.
+ *         Helper class with methods for the {@link SubscribeService} to check
+ *         and subscriptions if not already available for user.
  *
  */
+@Component
 public class SubscriptionUtil {
 
 	/**

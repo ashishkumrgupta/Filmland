@@ -1,4 +1,4 @@
-package com.filmland.dto;
+package com.filmland.springbootstarter.dto;
 
 import java.util.List;
 

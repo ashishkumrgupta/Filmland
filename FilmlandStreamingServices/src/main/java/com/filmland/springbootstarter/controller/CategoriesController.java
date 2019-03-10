@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.filmland.dto.AvailableAndSubscribedCategories;
+import com.filmland.springbootstarter.dto.AvailableAndSubscribedCategories;
 import com.filmland.springbootstarter.services.CategoryService;
 
 @RestController
