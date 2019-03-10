@@ -12,11 +12,12 @@ import com.filmland.dto.SubscribedCategories;
 @Service
 public class CategoryService {
 
-	public AvailableAndSubscribedCategories getUserSubscribedAndAllCategories() {
-		return new AvailableAndSubscribedCategories(getAllAvailableCategories(), getUserSubscribedCategories());
+	public AvailableAndSubscribedCategories getUserSubscribedAndAllCategories(String user) {
+		return new AvailableAndSubscribedCategories(getAllAvailableCategories(), getUserSubscribedCategories(user));
 	}
 
-	public List<SubscribedCategories> getUserSubscribedCategories() {
+	public List<SubscribedCategories> getUserSubscribedCategories(String user) {
+		// write query and logic to find the subscribed categories for provided user
 		return Arrays.asList(new SubscribedCategories("International Films", "8", "4", "today"));
 	}
 

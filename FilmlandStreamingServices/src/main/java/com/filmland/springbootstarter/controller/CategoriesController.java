@@ -1,6 +1,7 @@
 package com.filmland.springbootstarter.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,8 +14,8 @@ public class CategoriesController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@RequestMapping("/userSubscribedCategories")
-	public AvailableAndSubscribedCategories getUserSubscribedCategory() {
-		return categoryService.getUserSubscribedAndAllCategories();
+	@RequestMapping("/userSubscribedCategories/{user}")
+	public AvailableAndSubscribedCategories getUserSubscribedCategory(@PathVariable String user) {
+		return categoryService.getUserSubscribedAndAllCategories(user);
 	}
 }
