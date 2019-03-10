@@ -1,10 +1,13 @@
 package com.filmland.springbootstarter.services;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.filmland.springbootstarter.dbrepository.CategoryRepository;
+import com.filmland.springbootstarter.dbrepository.SubscriptionRepository;
 import com.filmland.springbootstarter.dto.AvailableAndSubscribedCategories;
 import com.filmland.springbootstarter.dto.AvailableCategories;
 import com.filmland.springbootstarter.dto.SubscribedCategories;
@@ -12,18 +15,24 @@ import com.filmland.springbootstarter.dto.SubscribedCategories;
 @Service
 public class CategoryService {
 
+	@Autowired
+	private CategoryRepository categoryRepository;
+
+	@Autowired
+	private SubscriptionRepository subscriptionRepository;
+
 	public AvailableAndSubscribedCategories getUserSubscribedAndAllCategories(String user) {
 		return new AvailableAndSubscribedCategories(getAllAvailableCategories(), getUserSubscribedCategories(user));
 	}
 
-	public List<SubscribedCategories> getUserSubscribedCategories(String user) {
-		// write query and logic to find the subscribed categories for provided user
-		return Arrays.asList(new SubscribedCategories("International Films", "8", "4", "today"));
+	public List<SubscribedCategories> getUserSubscribedCategories(String userEmailId) {
+		return subscriptionRepository.findByemailId(userEmailId);
 	}
 
 	public List<AvailableCategories> getAllAvailableCategories() {
-		return Arrays.asList(new AvailableCategories("Dutch Films", "10", "4"),
-				new AvailableCategories("Dutch Series", "20", "6"),
-				new AvailableCategories("International Films", "30", "8"));
+		List<AvailableCategories> availableCategory = new ArrayList<AvailableCategories>();
+		categoryRepository.findAll().forEach(availableCategory::add);
+
+		return availableCategory;
 	}
 }

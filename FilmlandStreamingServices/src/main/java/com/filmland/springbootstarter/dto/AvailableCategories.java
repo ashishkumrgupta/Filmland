@@ -1,15 +1,31 @@
 package com.filmland.springbootstarter.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="AVAILABLE_CATEGORIES")
 public class AvailableCategories {
 
+	@Id
+	@Column(name="CATEGORY_NAME")
 	private String categoryName;
-	private String avaialbleContent;
+	
+	@Column(name="REMAINING_COUNT")
+	private String remainingCount;
+	
+	@Column(name="PRICE")
 	private String price;
 
-	public AvailableCategories(String categoryName, String avaialbleContent, String price) {
+	public AvailableCategories() {
+		
+	}
+	public AvailableCategories(String categoryId, String categoryName, String avaialbleContent, String price) {
 		super();
 		this.categoryName = categoryName;
-		this.avaialbleContent = avaialbleContent;
+		this.remainingCount = avaialbleContent;
 		this.price = price;
 	}
 
@@ -22,11 +38,11 @@ public class AvailableCategories {
 	}
 
 	public String getAvaialbleContent() {
-		return avaialbleContent;
+		return remainingCount;
 	}
 
 	public void setAvaialbleContent(String avaialbleContent) {
-		this.avaialbleContent = avaialbleContent;
+		this.remainingCount = avaialbleContent;
 	}
 
 	public String getPrice() {
@@ -36,5 +52,4 @@ public class AvailableCategories {
 	public void setPrice(String price) {
 		this.price = price;
 	}
-
 }

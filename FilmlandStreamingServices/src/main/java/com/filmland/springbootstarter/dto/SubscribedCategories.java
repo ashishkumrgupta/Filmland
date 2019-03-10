@@ -1,17 +1,50 @@
 package com.filmland.springbootstarter.dto;
 
-public class SubscribedCategories {
-	private String categoryName;
-	private String remainingContent;
-	private String price;
-	private String startDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-	public SubscribedCategories(String categoryName, String remainingContent, String price, String startDate) {
+@Entity
+@Table(name = "USER_SUBSCRIBED_CATEGORIES")
+public class SubscribedCategories {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "SUBSCRIPTION_ID")
+	private Long subscriptionId;
+
+	@Column(name = "EMAIL_ID")
+	private String emailId;
+
+	@Column(name = "CATEGORY_NAME")
+	private String categoryName;
+
+	@Column(name = "REMAINING_CONTENT")
+	private String remainingContent;
+
+	@Column(name = "PRICE")
+	private String price;
+
+	public SubscribedCategories() {
+	}
+
+	public SubscribedCategories(String emailId, String categoryName, String remainingContent, String price) {
 		super();
+		this.emailId = emailId;
 		this.categoryName = categoryName;
 		this.remainingContent = remainingContent;
 		this.price = price;
-		this.startDate = startDate;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 
 	public String getCategoryName() {
@@ -37,13 +70,4 @@ public class SubscribedCategories {
 	public void setPrice(String price) {
 		this.price = price;
 	}
-
-	public String getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-
 }
