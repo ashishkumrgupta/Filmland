@@ -18,12 +18,12 @@ public class SubscribeService {
 	@Autowired
 	private ShareSubscriptionUtil shareSubscriptionUtil;
 
-	public void addUserSubscriptionForCategory(SubscribeCategoryInputModel subscribeCategory) {
-		boolean status = subscriptionUtil.checkAndAddRequestedSubscriptionForUser(subscribeCategory);
+	public boolean addUserSubscriptionForCategory(SubscribeCategoryInputModel subscribeCategory) {
+		return subscriptionUtil.checkAndAddRequestedSubscriptionForUser(subscribeCategory);
 		
 	}
 
-	public void shareUserCategoryWithExistingUser(ShareCategoryInputModel shareCategory) {
-		shareSubscriptionUtil.checkAndShareCategoryWithUser(shareCategory);
+	public boolean shareUserCategoryWithExistingUser(ShareCategoryInputModel shareCategory) {
+		return shareSubscriptionUtil.checkAndShareCategoryWithUser(shareCategory);
 	}
 }

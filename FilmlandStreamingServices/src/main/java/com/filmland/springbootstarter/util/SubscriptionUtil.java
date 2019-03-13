@@ -49,7 +49,7 @@ public class SubscriptionUtil {
 	 * @param subscribeCategory
 	 * @return {@link ResponseStatus}
 	 */
-	public boolean checkAndAddRequestedSubscriptionForUser(SubscribeCategoryInputModel subscribeCategory) {
+	public boolean checkAndAddRequestedSubscriptionForUser(SubscribeCategoryInputModel subscribeCategory) throws SubscriptionAlreadyAvailableException {
 		boolean subsriptionStatus = checkSubsriptionStatus(subscribeCategory);
 		logger.info("chekcing for subscription of user {} for category {} is {}", subscribeCategory.getEmail(),
 				subscribeCategory.getCategoryToBeSubscribed(), subsriptionStatus);
@@ -80,7 +80,7 @@ public class SubscriptionUtil {
 				subscribeCategory.getCategoryToBeSubscribed(),
 				getTotalAvailableContentForCategory(subscribeCategory.getCategoryToBeSubscribed()),
 				getPriceOfCategory(subscribeCategory.getCategoryToBeSubscribed()), "Y",
-				filmlandCommonUtil.getCurrentDate());
+				filmlandCommonUtil.getCurrentDate(), "Y");
 
 		subscriptionRepository.save(subscribedCategories);
 		return true;

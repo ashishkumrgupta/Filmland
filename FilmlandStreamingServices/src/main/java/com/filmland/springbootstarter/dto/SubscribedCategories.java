@@ -33,23 +33,27 @@ public class SubscribedCategories {
 	private String price;
 
 	@Column(name = "STATUS")
-	private String status;
+	private String subscriptionStatus;
 
 	@Column(name = "SUBSCRIPTION_START_DATE")
 	private LocalDate subscriptionStartDate;
+
+	@Column(name = "NEW_MEMBER")
+	private String isNewMember;
 
 	public SubscribedCategories() {
 	}
 
 	public SubscribedCategories(String emailId, String categoryName, String remainingContent, String price,
-			String status, LocalDate subscriptionStartDate) {
+			String status, LocalDate subscriptionStartDate, String isNewMember) {
 		super();
 		this.emailId = emailId;
 		this.categoryName = categoryName;
 		this.remainingContent = remainingContent;
 		this.price = price;
-		this.status = status;
+		this.subscriptionStatus = status;
 		this.subscriptionStartDate = subscriptionStartDate;
+		this.isNewMember = isNewMember;
 	}
 
 	@JsonIgnore
@@ -96,11 +100,11 @@ public class SubscribedCategories {
 
 	@JsonIgnore
 	public String getStatus() {
-		return status;
+		return subscriptionStatus;
 	}
 
 	public void setStatus(String status) {
-		this.status = status;
+		this.subscriptionStatus = status;
 	}
 
 	public LocalDate getSubscriptionStartDate() {
@@ -109,6 +113,23 @@ public class SubscribedCategories {
 
 	public void setSubscriptionStartDate(LocalDate subscriptionStartDate) {
 		this.subscriptionStartDate = subscriptionStartDate;
+	}
+
+	public String getSubscriptionStatus() {
+		return subscriptionStatus;
+	}
+
+	public void setSubscriptionStatus(String subscriptionStatus) {
+		this.subscriptionStatus = subscriptionStatus;
+	}
+
+	@JsonIgnore
+	public String getIsNewMember() {
+		return isNewMember;
+	}
+
+	public void setIsNewMember(String isNewMember) {
+		this.isNewMember = isNewMember;
 	}
 
 }
