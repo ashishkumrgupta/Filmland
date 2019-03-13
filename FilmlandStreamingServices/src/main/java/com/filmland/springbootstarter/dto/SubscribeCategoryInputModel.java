@@ -1,10 +1,10 @@
 package com.filmland.springbootstarter.dto;
 
-public class SubscribeCategory {
+public class SubscribeCategoryInputModel {
 	private String email;
 	private String categoryToBeSubscribed;
 
-	public SubscribeCategory(String email, String categoryToBeSubscribed) {
+	public SubscribeCategoryInputModel(String email, String categoryToBeSubscribed) {
 		super();
 		this.email = email;
 		this.categoryToBeSubscribed = categoryToBeSubscribed;

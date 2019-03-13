@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.filmland.springbootstarter.dto.ResponseStatus;
-import com.filmland.springbootstarter.dto.ShareCategory;
-import com.filmland.springbootstarter.dto.SubscribeCategory;
+import com.filmland.springbootstarter.dto.ShareCategoryInputModel;
+import com.filmland.springbootstarter.dto.SubscribeCategoryInputModel;
 import com.filmland.springbootstarter.util.ShareSubscriptionUtil;
 import com.filmland.springbootstarter.util.SubscriptionUtil;
 
@@ -18,12 +18,12 @@ public class SubscribeService {
 	@Autowired
 	private ShareSubscriptionUtil shareSubscriptionUtil;
 
-	public ResponseStatus addUserSubscriptionForCategory(SubscribeCategory subscribeCategory) {
-
-		return subscriptionUtil.checkAndAddRequestedSubscriptionForUser(subscribeCategory);
+	public void addUserSubscriptionForCategory(SubscribeCategoryInputModel subscribeCategory) {
+		boolean status = subscriptionUtil.checkAndAddRequestedSubscriptionForUser(subscribeCategory);
+		
 	}
 
-	public void shareUserCategoryWithExistingUser(ShareCategory shareCategory) {
+	public void shareUserCategoryWithExistingUser(ShareCategoryInputModel shareCategory) {
 		shareSubscriptionUtil.checkAndShareCategoryWithUser(shareCategory);
 	}
 }

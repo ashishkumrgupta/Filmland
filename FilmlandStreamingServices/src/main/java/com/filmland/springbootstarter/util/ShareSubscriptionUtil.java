@@ -1,8 +1,16 @@
 package com.filmland.springbootstarter.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.filmland.springbootstarter.dto.ShareCategory;
+import com.filmland.springbootstarter.dbrepository.FilmlandUserRepository;
+import com.filmland.springbootstarter.dbrepository.ShareCategoryRepository;
+import com.filmland.springbootstarter.dto.ShareCategoryInputModel;
+import com.filmland.springbootstarter.dto.SharedCategory;
+import com.filmland.springbootstarter.dto.SubscribeCategoryInputModel;
+import com.filmland.springbootstarter.exceptions.UserNotFoundException;
 
 /**
  * @author Ashish
@@ -14,30 +22,37 @@ import com.filmland.springbootstarter.dto.ShareCategory;
 @Component
 public class ShareSubscriptionUtil {
 
+	private static Logger logger = LoggerFactory.getLogger(ShareSubscriptionUtil.class);
+
+	@Autowired
+	private FilmlandUserRepository filmlandUserRepository;
+
+	@Autowired
+	private ShareCategoryRepository shareCategoryRepository;
+
+	@Autowired
+	private SubscriptionUtil subscriptionUtil;
+
 	/**
 	 * Method to check and share the requested category with only existing users.
 	 * 
 	 * @param shareCategory Details of the user.
 	 */
-	public void checkAndShareCategoryWithUser(ShareCategory shareCategory) {
-		boolean userExistanceStatus = checkRequesteddUxserExistence(shareCategory);
+	public boolean checkAndShareCategoryWithUser(ShareCategoryInputModel shareCategory) {
+		boolean userExistanceStatus = filmlandUserRepository.existsById(shareCategory.getCustomer());
+		logger.info("user existance.", userExistanceStatus);
 
 		if (userExistanceStatus) {
-			// update database for main user --Shared with---
-			// customer --- subscribed category, start date , remaining---
-		} else {
-			// you can not share the category as provided user doesn't exist.
-		}
-	}
+			subscriptionUtil.checkAndAddRequestedSubscriptionForUser(new SubscribeCategoryInputModel(
+					shareCategory.getCustomer(), shareCategory.getSubscribedCategory()));
 
-	/**
-	 * Method to check if the requested customer by user is in the subscription or
-	 * not.
-	 * 
-	 * @param shareCategory Details of the user.
-	 */
-	public boolean checkRequesteddUxserExistence(ShareCategory shareCategory) {
-		// check here in data base if the requested user exists.
-		return true;
+			SharedCategory sharedCategory = new SharedCategory(shareCategory.getEmail(), shareCategory.getCustomer(),
+					shareCategory.getSubscribedCategory());
+			shareCategoryRepository.save(sharedCategory);
+			logger.info("User exist and sharing is in progress.");
+			return true;
+		} else {
+			throw new UserNotFoundException();
+		}
 	}
 }

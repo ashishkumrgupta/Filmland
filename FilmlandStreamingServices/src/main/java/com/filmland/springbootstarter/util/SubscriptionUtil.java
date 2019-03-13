@@ -2,13 +2,17 @@ package com.filmland.springbootstarter.util;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.filmland.springbootstarter.dbrepository.SubscriptionRepository;
 import com.filmland.springbootstarter.dto.ResponseStatus;
-import com.filmland.springbootstarter.dto.SubscribeCategory;
+import com.filmland.springbootstarter.dto.SubscribeCategoryInputModel;
 import com.filmland.springbootstarter.dto.SubscribedCategories;
+import com.filmland.springbootstarter.exceptions.SubscriptionAlreadyAvailableException;
+import com.filmland.springbootstarter.services.CategoryService;
 import com.filmland.springbootstarter.services.SubscribeService;
 
 /**
@@ -21,6 +25,8 @@ import com.filmland.springbootstarter.services.SubscribeService;
 @Component
 public class SubscriptionUtil {
 
+	private static final Logger logger = LoggerFactory.getLogger(SubscriptionUtil.class);
+
 	/**
 	 * Method to check if the user has already subscribed to the requested category.
 	 * 
@@ -31,17 +37,27 @@ public class SubscriptionUtil {
 	@Autowired
 	private SubscriptionRepository subscriptionRepository;
 
-	private ResponseStatus responseStatus;
+	@Autowired
+	private CategoryService categoryService;
 
-	public ResponseStatus checkAndAddRequestedSubscriptionForUser(SubscribeCategory subscribeCategory) {
+	@Autowired
+	private FilmlandCommonUtil filmlandCommonUtil;
+
+	/**
+	 * Method to check and Add subscription for the requested user.
+	 * 
+	 * @param subscribeCategory
+	 * @return {@link ResponseStatus}
+	 */
+	public boolean checkAndAddRequestedSubscriptionForUser(SubscribeCategoryInputModel subscribeCategory) {
 		boolean subsriptionStatus = checkSubsriptionStatus(subscribeCategory);
-
+		logger.info("chekcing for subscription of user {} for category {} is {}", subscribeCategory.getEmail(),
+				subscribeCategory.getCategoryToBeSubscribed(), subsriptionStatus);
 		if (subsriptionStatus) {
-			responseStatus = addSubscription(subscribeCategory, subsriptionStatus);
+			return addSubscription(subscribeCategory, subsriptionStatus);
 		} else {
-			responseStatus = createResponseMessage(subscribeCategory, subsriptionStatus);
+			throw new SubscriptionAlreadyAvailableException();
 		}
-		return responseStatus;
 	}
 
 	/**
@@ -50,35 +66,49 @@ public class SubscriptionUtil {
 	 * @param subscribeCategory
 	 * @return true is category is already subscribed.
 	 */
-	private boolean checkSubsriptionStatus(SubscribeCategory subscribeCategory) {
+	private boolean checkSubsriptionStatus(SubscribeCategoryInputModel subscribeCategory) {
 		List<SubscribedCategories> list = subscriptionRepository.findByemailIdAndCategoryName(
 				subscribeCategory.getEmail(), subscribeCategory.getCategoryToBeSubscribed());
+		logger.info("user is subscribed already {}", list.size());
 		return list.isEmpty();
 	}
 
-	public ResponseStatus addSubscription(SubscribeCategory subscribeCategory, boolean subsriptionStatus) {
+	public boolean addSubscription(SubscribeCategoryInputModel subscribeCategory, boolean subsriptionStatus) {
+		logger.info("adding user {} for {} category", subscribeCategory.getEmail(),
+				subscribeCategory.getCategoryToBeSubscribed());
 		SubscribedCategories subscribedCategories = new SubscribedCategories(subscribeCategory.getEmail(),
-				subscribeCategory.getCategoryToBeSubscribed(), "10", "10");
-		subscriptionRepository.save(subscribedCategories);
+				subscribeCategory.getCategoryToBeSubscribed(),
+				getTotalAvailableContentForCategory(subscribeCategory.getCategoryToBeSubscribed()),
+				getPriceOfCategory(subscribeCategory.getCategoryToBeSubscribed()), "Y",
+				filmlandCommonUtil.getCurrentDate());
 
-		return createResponseMessage(subscribeCategory, subsriptionStatus);
+		subscriptionRepository.save(subscribedCategories);
+		return true;
 	}
 
-	private ResponseStatus createResponseMessage(SubscribeCategory subscribeCategory, boolean subsriptionStatus) {
+	public void addSharedSubscriptionDetails() {
 
-		StringBuilder msg = new StringBuilder();
-		msg.append("Your Subscription to ");
-		msg.append(subscribeCategory.getCategoryToBeSubscribed());
+	}
 
-		if (subsriptionStatus) {
-			msg.append(" has been successfully added.");
-			return new ResponseStatus("Login successful", msg.toString());
-		}
+	/**
+	 * Method to get Total available content for a particular category.
+	 * 
+	 * @param categoryName
+	 * @return {@link String} total available category.
+	 */
+	private String getTotalAvailableContentForCategory(String categoryName) {
+		logger.info("requested category name ", categoryName);
+		return categoryService.getCategoryDetailsBasedOnCategory(categoryName).getAvaialbleContent();
+	}
 
-		else {
-			msg.append(" is already available");
-			return new ResponseStatus("Login successful", msg.toString());
-		}
+	/**
+	 * Method to get price for a particular category.
+	 * 
+	 * @param categoryName
+	 * @return {@link String} price of the category.
+	 */
 
+	private String getPriceOfCategory(String categoryName) {
+		return categoryService.getCategoryDetailsBasedOnCategory(categoryName).getPrice();
 	}
 }

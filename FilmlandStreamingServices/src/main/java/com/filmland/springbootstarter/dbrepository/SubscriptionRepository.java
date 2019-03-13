@@ -12,4 +12,6 @@ public interface SubscriptionRepository extends CrudRepository<SubscribedCategor
 	public List<SubscribedCategories> findByemailId(String emailId);
 
 	public List<SubscribedCategories> findByemailIdAndCategoryName(String emailId, String categoryName);
+	
+	public List<SubscribedCategories> findByStatus(char status);
 }

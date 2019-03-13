@@ -1,12 +1,12 @@
 package com.filmland.springbootstarter.dto;
 
-public class ShareCategory {
+public class ShareCategoryInputModel {
 
 	private String email;
 	private String customer;
 	private String subscribedCategory;
 
-	public ShareCategory(String email, String customer, String subscribedCategory) {
+	public ShareCategoryInputModel(String email, String customer, String subscribedCategory) {
 		super();
 		this.email = email;
 		this.customer = customer;
