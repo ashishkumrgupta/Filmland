@@ -56,4 +56,17 @@ public class FilmlandExceptionHandler {
 				"Your Subscription to requested category is already avaialble.");
 		return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
 	}
+
+	/**
+	 * In case requested user is not available with filmland.
+	 * 
+	 * @param exception {@link UserNotFoundException}
+	 * @return {@link ResponseEntity}
+	 */
+	@ExceptionHandler(value = LoginUserNotFoundException.class)
+	public ResponseEntity<Object> exception(LoginUserNotFoundException exception) {
+		ResponseStatus status = new ResponseStatus(new Date(), "Login failed",
+				"User trying to login is not registered with filmland.");
+		return new ResponseEntity<>(status, HttpStatus.NOT_FOUND);
+	}
 }

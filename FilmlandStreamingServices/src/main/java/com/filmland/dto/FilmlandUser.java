@@ -16,6 +16,9 @@ public class FilmlandUser {
 	@Column(name = "PASSWORD")
 	private String password;
 
+	public FilmlandUser() {
+	}
+
 	public FilmlandUser(String email, String password) {
 		super();
 		this.email = email;

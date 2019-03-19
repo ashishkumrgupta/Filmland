@@ -1,6 +1,8 @@
 package com.filmland.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +18,11 @@ public class CategoriesController {
 	private CategoryService categoryService;
 
 	@RequestMapping("/userSubscribedCategories/{user}")
-	public AvailableAndSubscribedCategories getUserSubscribedCategory(@PathVariable String user) {
-		return categoryService.getUserSubscribedAndAllCategories(user);
+	public Resource<AvailableAndSubscribedCategories> getUserSubscribedCategory(@PathVariable String user) {
+		Resource<AvailableAndSubscribedCategories> result = new Resource<AvailableAndSubscribedCategories>(
+				categoryService.getUserSubscribedAndAllCategories(user));
+		Link link = new Link("http://localhost:8080/filmland/userSubscribedCategories/");
+		result.add(link);
+		return result;
 	}
 }

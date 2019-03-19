@@ -1,4 +1,4 @@
-INSERT INTO FILMLAND_USERS VALUES('testuser1@sogeti.com', 'testen#1');
+INSERT INTO FILMLAND_USERS VALUES('testuser1@sogeti.com', '$2a$10$AjHGc4x3Nez/p4ZpvFDWeO6FGxee/cVqj5KHHnHfuLnIOzC5ag4fm');
 INSERT INTO FILMLAND_USERS VALUES('testuser2@sogeti.com', 'testen#2');
 INSERT INTO FILMLAND_USERS VALUES('testuser3@sogeti.com', 'testen#2');
 

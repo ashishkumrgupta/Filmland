@@ -2,7 +2,9 @@ package com.filmland.dto;
 
 import java.util.List;
 
-public class AvailableAndSubscribedCategories {
+import org.springframework.hateoas.ResourceSupport;
+
+public class AvailableAndSubscribedCategories extends ResourceSupport {
 
 	private List<AvailableCategories> availableCategories;
 	private List<SubscribedCategories> subscribedCategories;
