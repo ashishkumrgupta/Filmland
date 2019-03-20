@@ -5,11 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.filmland.dbrepository.FilmlandUserRepository;
 import com.filmland.dbrepository.ShareCategoryRepository;
 import com.filmland.dto.ShareCategoryInputModel;
 import com.filmland.dto.SharedCategory;
 import com.filmland.dto.SubscribeCategoryInputModel;
+import com.filmland.exceptions.SubscriptionNotAvailableException;
 import com.filmland.exceptions.UserNotFoundException;
 
 /**
@@ -25,13 +25,13 @@ public class ShareSubscriptionUtil {
 	private static Logger logger = LoggerFactory.getLogger(ShareSubscriptionUtil.class);
 
 	@Autowired
-	private FilmlandUserRepository filmlandUserRepository;
-
-	@Autowired
 	private ShareCategoryRepository shareCategoryRepository;
 
 	@Autowired
 	private SubscriptionUtil subscriptionUtil;
+
+	@Autowired
+	private FilmlandCommonUtil filmlandCommonUtil;
 
 	/**
 	 * Method to check and share the requested category with only existing users.
@@ -39,12 +39,16 @@ public class ShareSubscriptionUtil {
 	 * @param shareCategory Details of the user.
 	 */
 	public boolean checkAndShareCategoryWithUser(ShareCategoryInputModel shareCategory) {
-		boolean userExistanceStatus = filmlandUserRepository.existsById(shareCategory.getCustomer());
-		logger.info("user existance.", userExistanceStatus);
+		if (filmlandCommonUtil.checkUserExistance(shareCategory.getEmail())) {
 
-		if (userExistanceStatus) {
-			subscriptionUtil.checkAndAddRequestedSubscriptionForUser(new SubscribeCategoryInputModel(
-					shareCategory.getCustomer(), shareCategory.getSubscribedCategory()));
+			SubscribeCategoryInputModel subscribeCategoryInputModelForLoginUser = new SubscribeCategoryInputModel(
+					shareCategory.getEmail(), shareCategory.getSubscribedCategory());
+			checkIfSubscriptionAvailableForUser(subscribeCategoryInputModelForLoginUser);
+
+			SubscribeCategoryInputModel subscribeCategoryInputModelForCustomer = new SubscribeCategoryInputModel(
+					shareCategory.getCustomer(), shareCategory.getSubscribedCategory());
+
+			subscriptionUtil.checkAndAddRequestedSubscriptionForUser(subscribeCategoryInputModelForCustomer);
 
 			SharedCategory sharedCategory = new SharedCategory(shareCategory.getEmail(), shareCategory.getCustomer(),
 					shareCategory.getSubscribedCategory());
@@ -53,6 +57,12 @@ public class ShareSubscriptionUtil {
 			return true;
 		} else {
 			throw new UserNotFoundException();
+		}
+	}
+
+	private void checkIfSubscriptionAvailableForUser(SubscribeCategoryInputModel subscribeCategoryInputModel) {
+		if (filmlandCommonUtil.checkSubsriptionStatus(subscribeCategoryInputModel)) {
+			throw new SubscriptionNotAvailableException();
 		}
 	}
 }

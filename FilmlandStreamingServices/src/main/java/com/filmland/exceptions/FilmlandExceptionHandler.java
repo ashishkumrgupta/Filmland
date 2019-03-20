@@ -69,4 +69,18 @@ public class FilmlandExceptionHandler {
 				"User trying to login is not registered with filmland.");
 		return new ResponseEntity<>(status, HttpStatus.NOT_FOUND);
 	}
+
+	/**
+	 * In case requested user is not available with filmland.
+	 * 
+	 * @param exception {@link UserNotFoundException}
+	 * @return {@link ResponseEntity}
+	 */
+	@ExceptionHandler(value = SubscriptionNotAvailableException.class)
+	public ResponseEntity<Object> exception(SubscriptionNotAvailableException exception) {
+		ResponseStatus status = new ResponseStatus(new Date(), "Login failed",
+				"Logged in User is not subscribed to requested subscription.");
+		return new ResponseEntity<>(status, HttpStatus.NOT_FOUND);
+	}
+
 }

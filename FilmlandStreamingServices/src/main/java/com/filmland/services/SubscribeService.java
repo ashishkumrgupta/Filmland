@@ -3,7 +3,6 @@ package com.filmland.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.filmland.dto.ResponseStatus;
 import com.filmland.dto.ShareCategoryInputModel;
 import com.filmland.dto.SubscribeCategoryInputModel;
 import com.filmland.util.ShareSubscriptionUtil;

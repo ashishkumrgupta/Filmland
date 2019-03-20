@@ -1,12 +1,11 @@
 package com.filmland.util;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.filmland.dbrepository.FilmlandUserRepository;
 import com.filmland.dbrepository.SubscriptionRepository;
 import com.filmland.dto.ResponseStatus;
 import com.filmland.dto.SubscribeCategoryInputModel;
@@ -49,8 +48,10 @@ public class SubscriptionUtil {
 	 * @param subscribeCategory
 	 * @return {@link ResponseStatus}
 	 */
-	public boolean checkAndAddRequestedSubscriptionForUser(SubscribeCategoryInputModel subscribeCategory) throws SubscriptionAlreadyAvailableException {
-		boolean subsriptionStatus = checkSubsriptionStatus(subscribeCategory);
+	public boolean checkAndAddRequestedSubscriptionForUser(SubscribeCategoryInputModel subscribeCategory)
+			throws SubscriptionAlreadyAvailableException {
+		filmlandCommonUtil.checkUserExistance(subscribeCategory.getEmail());
+		boolean subsriptionStatus = filmlandCommonUtil.checkSubsriptionStatus(subscribeCategory);
 		logger.info("chekcing for subscription of user {} for category {} is {}", subscribeCategory.getEmail(),
 				subscribeCategory.getCategoryToBeSubscribed(), subsriptionStatus);
 		if (subsriptionStatus) {
@@ -58,19 +59,6 @@ public class SubscriptionUtil {
 		} else {
 			throw new SubscriptionAlreadyAvailableException();
 		}
-	}
-
-	/**
-	 * Method to check if the user has already subscribed the requested category.
-	 * 
-	 * @param subscribeCategory
-	 * @return true is category is already subscribed.
-	 */
-	private boolean checkSubsriptionStatus(SubscribeCategoryInputModel subscribeCategory) {
-		List<SubscribedCategories> list = subscriptionRepository.findByemailIdAndCategoryName(
-				subscribeCategory.getEmail(), subscribeCategory.getCategoryToBeSubscribed());
-		logger.info("user is subscribed already {}", list.size());
-		return list.isEmpty();
 	}
 
 	public boolean addSubscription(SubscribeCategoryInputModel subscribeCategory, boolean subsriptionStatus) {

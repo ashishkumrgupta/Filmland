@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import com.filmland.dbrepository.UserRepository;
+import com.filmland.dbrepository.FilmlandUserRepository;
 import com.filmland.dto.FilmlandUser;
 import com.filmland.exceptions.LoginUserNotFoundException;
 
@@ -18,11 +18,12 @@ import com.filmland.exceptions.LoginUserNotFoundException;
 public class FilmLandUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private UserRepository userRepository;
+	private FilmlandUserRepository filmLanduserRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws LoginUserNotFoundException {
-		FilmlandUser user = userRepository.findById(username).orElseThrow(() -> new LoginUserNotFoundException());
+		FilmlandUser user = filmLanduserRepository.findById(username)
+				.orElseThrow(() -> new LoginUserNotFoundException());
 		List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("user"));
 		return new User(user.getEmail(), user.getPassword(), authorities);
 	}

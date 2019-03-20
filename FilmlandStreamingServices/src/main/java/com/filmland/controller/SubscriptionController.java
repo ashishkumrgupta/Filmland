@@ -22,6 +22,7 @@ public class SubscriptionController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/subscribeCategory")
 	public ResponseStatus subscribeCategory(@RequestBody SubscribeCategoryInputModel subscribeCategory) {
+		subscribeService.addUserSubscriptionForCategory(subscribeCategory);
 		return new ResponseStatus(new Date(), "Login successful", "Category is successfully subscribed.");
 	}
 
