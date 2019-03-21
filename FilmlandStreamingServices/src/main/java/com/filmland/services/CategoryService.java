@@ -31,8 +31,13 @@ public class CategoryService {
 		return subscriptionRepository.findByemailId(userEmailId);
 	}
 
+	/**
+	 * Method to extract all available categories in the database.
+	 * 
+	 * @return List of all available category.
+	 */
 	public List<AvailableCategories> getAllAvailableCategories() {
-		List<AvailableCategories> availableCategory = new ArrayList<AvailableCategories>();
+		List<AvailableCategories> availableCategory = new ArrayList<>();
 		categoryRepository.findAll().forEach(availableCategory::add);
 
 		return availableCategory;
@@ -42,13 +47,14 @@ public class CategoryService {
 	 * To find category details from the data base.
 	 * 
 	 * @param categoryName requested category Name.
+	 * 
 	 * @return {@link AvailableCategories}
 	 */
 	public AvailableCategories getCategoryDetailsBasedOnCategory(String categoryName) {
 
-		Optional<AvailableCategories> a = categoryRepository.findById(categoryName);
-		if (a.isPresent())
-			return a.get();
+		Optional<AvailableCategories> availableCategory = categoryRepository.findById(categoryName);
+		if (availableCategory.isPresent())
+			return availableCategory.get();
 		else
 			throw new CategoryNotFoundException();
 	}

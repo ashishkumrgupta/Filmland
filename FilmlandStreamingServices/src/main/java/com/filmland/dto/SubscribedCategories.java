@@ -114,7 +114,8 @@ public class SubscribedCategories {
 	public void setSubscriptionStartDate(LocalDate subscriptionStartDate) {
 		this.subscriptionStartDate = subscriptionStartDate;
 	}
-
+	
+	@JsonIgnore
 	public String getSubscriptionStatus() {
 		return subscriptionStatus;
 	}

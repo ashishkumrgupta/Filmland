@@ -31,5 +31,4 @@ public class AvailableAndSubscribedCategories extends ResourceSupport {
 	public void setSubscribedCategories(List<SubscribedCategories> subscribedCategories) {
 		this.subscribedCategories = subscribedCategories;
 	}
-
 }

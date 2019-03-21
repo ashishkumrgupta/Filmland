@@ -22,7 +22,7 @@ public class AvailableCategories {
 	public AvailableCategories() {
 		
 	}
-	public AvailableCategories(String categoryId, String categoryName, String avaialbleContent, String price) {
+	public AvailableCategories(String categoryName, String avaialbleContent, String price) {
 		super();
 		this.categoryName = categoryName;
 		this.remainingCount = avaialbleContent;

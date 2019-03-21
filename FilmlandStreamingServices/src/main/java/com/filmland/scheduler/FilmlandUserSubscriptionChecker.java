@@ -15,7 +15,7 @@ import com.filmland.dto.SubscribedCategories;
 import com.filmland.util.FilmlandCommonUtil;
 
 /**
- * class having scheduler to automatically check the subscription expire of the
+ * class having scheduler to automatically check the expired subscription of the
  * users.
  * 
  * @author ashis
@@ -43,9 +43,10 @@ public class FilmlandUserSubscriptionChecker {
 	@Scheduled(cron = "0 0/2 * 1/1 * ?")
 	public void checkAndUpdateStatusOfSubscriptions() {
 
-		List<SubscribedCategories> activeSubscriptions = subscriptionInfoRepository.findBySubscriptionStatus(ACTIVE_SUBSCRIPTION);
+		List<SubscribedCategories> activeSubscriptions = subscriptionInfoRepository
+				.findBySubscriptionStatus(ACTIVE_SUBSCRIPTION);
 
-		if (!activeSubscriptions.isEmpty() && null != activeSubscriptions) {
+		if (!activeSubscriptions.isEmpty()) {
 			logger.info("Total service with active subscription : {}", activeSubscriptions.size());
 
 			List<SubscribedCategories> expiredSubscriptions = activeSubscriptions.parallelStream()
@@ -54,7 +55,7 @@ public class FilmlandUserSubscriptionChecker {
 								curentSubscription.getSubscriptionStartDate(), paymentCycleMonthDuration)
 								|| filmlandCommonUtil.checkIfSubscriptionDateExpiredBasedOnMonth(
 										curentSubscription.getSubscriptionStartDate(), freeSubscriptionMonthDuration)) {
-							if (curentSubscription.getIsNewMember() == ACTIVE_SUBSCRIPTION) {
+							if (curentSubscription.getIsNewMember().equals(ACTIVE_SUBSCRIPTION)) {
 								curentSubscription.setIsNewMember(INACTIVE_SUBSCRIPTION);
 							}
 							curentSubscription.setStatus(INACTIVE_SUBSCRIPTION);

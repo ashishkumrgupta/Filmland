@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.filmland.dbrepository.FilmlandUserRepository;
 import com.filmland.dbrepository.SubscriptionRepository;
 import com.filmland.dto.ResponseStatus;
 import com.filmland.dto.SubscribeCategoryInputModel;
@@ -55,27 +54,23 @@ public class SubscriptionUtil {
 		logger.info("chekcing for subscription of user {} for category {} is {}", subscribeCategory.getEmail(),
 				subscribeCategory.getCategoryToBeSubscribed(), subsriptionStatus);
 		if (subsriptionStatus) {
-			return addSubscription(subscribeCategory, subsriptionStatus);
+			return addSubscription(subscribeCategory);
 		} else {
 			throw new SubscriptionAlreadyAvailableException();
 		}
 	}
 
-	public boolean addSubscription(SubscribeCategoryInputModel subscribeCategory, boolean subsriptionStatus) {
+	public boolean addSubscription(SubscribeCategoryInputModel subscribeCategory) {
 		logger.info("adding user {} for {} category", subscribeCategory.getEmail(),
 				subscribeCategory.getCategoryToBeSubscribed());
 		SubscribedCategories subscribedCategories = new SubscribedCategories(subscribeCategory.getEmail(),
 				subscribeCategory.getCategoryToBeSubscribed(),
 				getTotalAvailableContentForCategory(subscribeCategory.getCategoryToBeSubscribed()),
-				getPriceOfCategory(subscribeCategory.getCategoryToBeSubscribed()), "Y",
+				getPriceOfCategory(subscribeCategory.getCategoryToBeSubscribed()), "N",
 				filmlandCommonUtil.getCurrentDate(), "Y");
 
 		subscriptionRepository.save(subscribedCategories);
 		return true;
-	}
-
-	public void addSharedSubscriptionDetails() {
-
 	}
 
 	/**
@@ -85,7 +80,7 @@ public class SubscriptionUtil {
 	 * @return {@link String} total available category.
 	 */
 	private String getTotalAvailableContentForCategory(String categoryName) {
-		logger.info("requested category name ", categoryName);
+		logger.info("requested category name {}", categoryName);
 		return categoryService.getCategoryDetailsBasedOnCategory(categoryName).getAvaialbleContent();
 	}
 

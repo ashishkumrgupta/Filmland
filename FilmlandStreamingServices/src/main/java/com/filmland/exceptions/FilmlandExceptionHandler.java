@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.filmland.constants.Constants;
 import com.filmland.dto.ResponseStatus;
 
 /**
@@ -26,7 +27,7 @@ public class FilmlandExceptionHandler {
 	 */
 	@ExceptionHandler(value = UserNotFoundException.class)
 	public ResponseEntity<Object> exception(UserNotFoundException exception) {
-		ResponseStatus status = new ResponseStatus(new Date(), "Login successfull",
+		ResponseStatus status = new ResponseStatus(new Date(), Constants.LOGIN_SUCCESSFULL,
 				"Requested User is not registered with filmland.");
 		return new ResponseEntity<>(status, HttpStatus.NOT_FOUND);
 	}
@@ -39,7 +40,7 @@ public class FilmlandExceptionHandler {
 	 */
 	@ExceptionHandler(value = CategoryNotFoundException.class)
 	public ResponseEntity<Object> exception(CategoryNotFoundException exception) {
-		ResponseStatus status = new ResponseStatus(new Date(), "Login successfull",
+		ResponseStatus status = new ResponseStatus(new Date(), Constants.LOGIN_SUCCESSFULL,
 				"Requested category is not found with filmland.");
 		return new ResponseEntity<>(status, HttpStatus.NOT_FOUND);
 	}
@@ -52,7 +53,7 @@ public class FilmlandExceptionHandler {
 	 */
 	@ExceptionHandler(value = SubscriptionAlreadyAvailableException.class)
 	public ResponseEntity<Object> exception(SubscriptionAlreadyAvailableException exception) {
-		ResponseStatus status = new ResponseStatus(new Date(), "Login successfull",
+		ResponseStatus status = new ResponseStatus(new Date(), Constants.LOGIN_SUCCESSFULL,
 				"Your Subscription to requested category is already avaialble.");
 		return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
 	}
@@ -65,7 +66,7 @@ public class FilmlandExceptionHandler {
 	 */
 	@ExceptionHandler(value = LoginUserNotFoundException.class)
 	public ResponseEntity<Object> exception(LoginUserNotFoundException exception) {
-		ResponseStatus status = new ResponseStatus(new Date(), "Login failed",
+		ResponseStatus status = new ResponseStatus(new Date(), Constants.LOGIN_FAILED,
 				"User trying to login is not registered with filmland.");
 		return new ResponseEntity<>(status, HttpStatus.NOT_FOUND);
 	}
@@ -78,7 +79,7 @@ public class FilmlandExceptionHandler {
 	 */
 	@ExceptionHandler(value = SubscriptionNotAvailableException.class)
 	public ResponseEntity<Object> exception(SubscriptionNotAvailableException exception) {
-		ResponseStatus status = new ResponseStatus(new Date(), "Login failed",
+		ResponseStatus status = new ResponseStatus(new Date(), Constants.LOGIN_FAILED,
 				"Logged in User is not subscribed to requested subscription.");
 		return new ResponseEntity<>(status, HttpStatus.NOT_FOUND);
 	}

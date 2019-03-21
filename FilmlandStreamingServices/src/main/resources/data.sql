@@ -1,11 +1,12 @@
 INSERT INTO FILMLAND_USERS VALUES('testuser1@sogeti.com', '$2a$10$AjHGc4x3Nez/p4ZpvFDWeO6FGxee/cVqj5KHHnHfuLnIOzC5ag4fm');
-INSERT INTO FILMLAND_USERS VALUES('testuser2@sogeti.com', 'testen#2');
-INSERT INTO FILMLAND_USERS VALUES('testuser3@sogeti.com', 'testen#2');
+INSERT INTO FILMLAND_USERS VALUES('java@sogeti.com', '$2a$10$SLBA1yOqic8k4qFRxbKdl.AjLV3dU4LcAaLtL6o4tH.ffF4KJ1MhS');
+INSERT INTO FILMLAND_USERS VALUES('testuser2@sogeti.com', '$2a$10$jCB1RhrG/U454Bvlo.aiFOu58chAXowAy8jkUn1Bi3ixSPGR49SFy');
+INSERT INTO FILMLAND_USERS VALUES('testuser3@sogeti.com', '$2a$10$fGd4PFW39W9zYcYYSb9ZI.wqmJsrP6cy4tvpO/792yZ7fmT4r0q0W');
 
 INSERT INTO AVAILABLE_CATEGORIES VALUES('Dutch Films','4','10');
 INSERT INTO AVAILABLE_CATEGORIES VALUES('Dutch Series','20','6');
 INSERT INTO AVAILABLE_CATEGORIES VALUES('International Films','5','8');
 
-INSERT INTO USER_SUBSCRIBED_CATEGORIES VALUES('101','testuser1@sogeti.com','International Films','5','2010-01-01','10','Y','N');
-INSERT INTO USER_SUBSCRIBED_CATEGORIES VALUES('102','testuser2@sogeti.com','Dutch Films','2','2010-01-01','6','N','Y');
-INSERT INTO USER_SUBSCRIBED_CATEGORIES VALUES('103','testuser3@sogeti.com','International Films','5','2010-01-01','10','Y','Y');
+INSERT INTO USER_SUBSCRIBED_CATEGORIES VALUES('101','testuser1@sogeti.com','International Films','5','2019-03-20','10','N','Y');
+INSERT INTO USER_SUBSCRIBED_CATEGORIES VALUES('102','testuser2@sogeti.com','Dutch Films','2','2019-01-20','6','Y','N');
+INSERT INTO USER_SUBSCRIBED_CATEGORIES VALUES('103','testuser3@sogeti.com','International Films','5','2019-03-01','10','N','Y');

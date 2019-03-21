@@ -27,7 +27,7 @@ public class FilmlandCommonUtil {
 	private SubscriptionRepository subscriptionRepository;
 
 	public LocalDate getCurrentDate() {
-		logger.info("local time: ", LocalDate.now());
+		logger.info("local time: {}", LocalDate.now());
 		return LocalDate.now();
 	}
 
@@ -55,8 +55,9 @@ public class FilmlandCommonUtil {
 		boolean status = filmlandUserRepository.existsById(userID);
 		if (!status) {
 			throw new UserNotFoundException();
-		} else
+		} else {
 			return status;
+		}
 	}
 
 	/**
